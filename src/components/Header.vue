@@ -1,29 +1,46 @@
 <template>
     <header>
-    <div claa="logo ">My App Logo</div>
-    <nav>
+      <div class="logo">SwiftCart</div>
+      <nav>
         <li>categories</li>
         <li>search</li>
         <li>Login</li>
         <li>cart</li>
-    </nav>
+      </nav>
     </header>
-</template>
-
-<script>
-export default {
+  </template>
+  
+  <script>
+  /**
+   * Header Component
+   * Displays the header with a logo and navigation links.
+   */
+  export default {
     name: 'Header'
-}
-</script>
-
-<style>
-header {
+  }
+  </script>
+  
+  <style scoped>
+  header {
     background-color: #333;
     color: #fff;
     padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-</style>
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+  
+  nav {
+    display: flex;
+    gap: 10px;
+  }
+  
+  nav li {
+    list-style: none;
+  }
+  </style>
+  
