@@ -14,3 +14,17 @@ export const fetchProducts = async () => {
     throw error;
   }
 };
+
+/**
+ * Fetch details of a single product by ID.
+ * @param {number} productId - The ID of the product to fetch.
+ * @returns {Promise<Object>} - A promise that resolves to the product details.
+ */
+export async function fetchProductDetails(productId) {
+    const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch product details');
+    }
+    return await response.json();
+  }
+  
