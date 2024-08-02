@@ -9,10 +9,6 @@ import Header from './components/Header.vue';
 <template>
   <div>
     <Header/>
-    <h1>Welcome to My Vue.js App</h1>
-    <p>This is a simple Vue.js app with a header component.</p>
-    <p>Feel free to add more components or update this template.</p>
-    <!-- Add your components or other elements here -->
   </div>
 </template>
 
