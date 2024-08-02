@@ -50,21 +50,21 @@
   display: block;
   text-align: left;
   width: 100%;
-  border: none; /* Remove default button border */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .product-card:hover {
 background-color:blueviolet;
-  transform: scale(1.05); /* Slightly increase size */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
   
 .product-image {
   width: 100%;
-  height: 200px; /* Set the desired height */
-  object-fit: contain; /* Maintain aspect ratio, cover the entire area */
+  height: 200px;
+  object-fit: contain;
   border-radius: 8px;
   margin-bottom: 16px;
   background-color: #f0f0f0; 
