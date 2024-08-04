@@ -1,3 +1,22 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { fetchProducts } from '../api';
+
+const products = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  try {
+    products.value = await fetchProducts();
+  } catch (err) {
+    error.value = 'Failed to fetch products.';
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
+
 <template>
   <header>
     <div class="logo">My App Logo</div>
@@ -18,16 +37,6 @@
     </nav>
   </header>
 </template>
-
-<script>
-/**
- * Header Component
- * Displays the header with a logo and navigation links.
- */
-export default {
-  name: 'Header'
-}
-</script>
 
 <style scoped>
 header {

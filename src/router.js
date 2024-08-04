@@ -1,17 +1,22 @@
-// src/router.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Layout from './components/Layout.vue';
+import ProductDetails from './components/ProductDetail.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Layout',
     component: Layout,
+  },
+  {
+    path: '/product/:id',
+    name: 'ProductDetails',
+    component: ProductDetails,
   }
 ];
 
 const router = createRouter({
-  history: createWebHistory(''), // Use an empty string if you don't have a base URL
+  history: createWebHistory(''),
   routes,
 });
 
