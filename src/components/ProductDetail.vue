@@ -33,29 +33,25 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.product-details {
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.product-details-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .product-image {
+  flex: 0 0 30%; /* Adjusted width for the image */
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   margin-bottom: 16px;
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-p {
-  margin-bottom: 8px;
+.product-info {
+  flex: 1;
+  background-color: #a373b155;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 </style>

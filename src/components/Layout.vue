@@ -1,3 +1,22 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import { fetchProducts } from '../api';
+
+const products = ref([]);
+const loading = ref(true);
+const error = ref(null);
+
+onMounted(async () => {
+  try {
+    products.value = await fetchProducts();
+  } catch (err) {
+    error.value = 'Failed to fetch products.';
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
+
 <template>
   <div>
     <div v-if="loading">Loading...</div>
@@ -22,25 +41,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import { fetchProducts } from '../api';
-
-const products = ref([]);
-const loading = ref(true);
-const error = ref(null);
-
-onMounted(async () => {
-  try {
-    products.value = await fetchProducts();
-  } catch (err) {
-    error.value = 'Failed to fetch products.';
-  } finally {
-    loading.value = false;
-  }
-});
-</script>
 
 <style scoped>
 .product-grid {

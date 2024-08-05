@@ -27,4 +27,14 @@ export async function fetchProductDetails(productId) {
     }
     return await response.json();
   }
+
+/**
+ * Fetches categories from the fake store API.
+ * @returns {Promise<string[]>} List of categories.
+ */
+export async function fetchCategories() {
+  const response = await fetch('https://fakestoreapi.com/products/categories');
+  return await response.json();
+}
+
   

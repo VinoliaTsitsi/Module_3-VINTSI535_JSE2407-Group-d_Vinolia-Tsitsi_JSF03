@@ -77,11 +77,11 @@ nav ul {
 }
 
 .search-container input {
-  padding: 10px 10px 10px 40px; /* Adjust padding to accommodate the icon */
+  padding: 10px 10px 10px 40px;
   border: none;
   border-radius: 5px;
   outline: none;
-  text-align: center; /* Center the placeholder text */
+  text-align: center;
 }
 
 .search-container {
@@ -91,7 +91,7 @@ nav ul {
 }
 
 .search-container input {
-  padding: 10px 10px 10px 100px; /* Adjust padding to accommodate the icon */
+  padding: 10px 10px 10px 100px;
   border: none;
   border-radius: 5px;
   outline: none;
@@ -100,9 +100,9 @@ nav ul {
 .search-icon {
   position: absolute;
   left: 10px;
-  width: 20px; /* Adjust icon size as needed */
+  width: 20px;
   height: 20px;
-  fill: #888; /* Icon color */
-  pointer-events: none; /* Prevent interaction with the icon */
+  fill: #888;
+  pointer-events: none;
 }
 </style>
