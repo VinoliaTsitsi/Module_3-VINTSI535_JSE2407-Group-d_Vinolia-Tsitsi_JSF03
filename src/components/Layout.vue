@@ -1,16 +1,74 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { fetchProducts } from '../api';
+import { useRouter, useRoute } from 'vue-router';
 
+/**
+ * Represents the list of products fetched from the API.
+ * @type {import('vue').Ref<Array<Product>>}
+ */
 const products = ref([]);
+
+/**
+ * Represents the original list of products, used for filtering and sorting.
+ * @type {import('vue').Ref<Array<Product>>}
+ */
 const originalProducts = ref([]);
+
+/**
+ * Indicates whether the data is still loading.
+ * @type {import('vue').Ref<boolean>}
+ */
 const loading = ref(true);
+
+/**
+ * Holds any error message if the data fetching fails.
+ * @type {import('vue').Ref<string | null>}
+ */
 const error = ref(null);
+
+/**
+ * Represents the current sorting option.
+ * @type {import('vue').Ref<'default' | 'low' | 'high'>}
+ */
 const sorting = ref('default');
+
+/**
+ * Represents the selected category for filtering.
+ * @type {import('vue').Ref<string>}
+ */
 const filterItem = ref('All categories');
+
+/**
+ * Represents the current search term.
+ * @type {import('vue').Ref<string>}
+ */
 const searchTerm = ref('');
+
+/**
+ * List of available categories fetched from the API.
+ * @type {import('vue').Ref<string[]>}
+ */
 const categories = ref([]);
 
+/**
+ * Vue Router instance for navigation.
+ * @type {import('vue-router').Router}
+ */
+const router = useRouter();
+
+/**
+ * Vue Route instance to access route information.
+ * @type {import('vue-router').Route}
+ */
+const route = useRoute();
+
+/**
+ * Fetches products from the API and initializes the component state.
+ * @async
+ * @function
+ * @returns {Promise<void>}
+ */
 onMounted(async () => {
   try {
     const fetchedProducts = await fetchProducts();
@@ -24,6 +82,10 @@ onMounted(async () => {
   }
 });
 
+/**
+ * Filters and sorts products based on user input.
+ * @type {import('vue').ComputedRef<Array<Product>>}
+ */
 const filteredAndSortedProducts = computed(() => {
   let filteredProducts = [...originalProducts.value];
 
@@ -47,6 +109,23 @@ const filteredAndSortedProducts = computed(() => {
   }
 
   return filteredProducts;
+});
+
+/**
+ * Resets the filters and sorting to their default values.
+ * @function
+ */
+const resetFiltersAndSorting = () => {
+  filterItem.value = 'All categories';
+  sorting.value = 'default';
+  searchTerm.value = '';
+};
+
+// Reset filters and sorting when navigating to home
+router.beforeEach((to, from) => {
+  if (to.path === '/' && from.path !== '/product/:id') {
+    resetFiltersAndSorting();
+  }
 });
 </script>
 
