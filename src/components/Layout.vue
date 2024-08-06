@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { fetchProducts } from '../api';
 
 const products = ref([]);
+const originalProducts = ref([]);
 const loading = ref(true);
 const error = ref(null);
 const sorting = ref('default');
@@ -11,9 +12,10 @@ const categories = ref([]);
 
 onMounted(async () => {
   try {
-    products.value = await fetchProducts();
-    // Assuming you have a method to extract categories from products
-    categories.value = [...new Set(products.value.map(p => p.category))];
+    const fetchedProducts = await fetchProducts();
+    products.value = fetchedProducts;
+    originalProducts.value = fetchedProducts;
+    categories.value = [...new Set(fetchedProducts.map(p => p.category))];
   } catch (err) {
     error.value = 'Failed to fetch products.';
   } finally {
@@ -21,24 +23,25 @@ onMounted(async () => {
   }
 });
 
-function applyFiltersAndSorting() {
-  let filteredProducts = [...products.value];
 
-  // Filter by category
+const filteredAndSortedProducts = computed(() => {
+  let filteredProducts = [...originalProducts.value];
+
   if (filterItem.value !== 'All categories') {
     filteredProducts = filteredProducts.filter(product => product.category === filterItem.value);
   }
 
-  // Sort products
   if (sorting.value === 'low') {
     filteredProducts.sort((a, b) => a.price - b.price);
   } else if (sorting.value === 'high') {
     filteredProducts.sort((a, b) => b.price - a.price);
   }
 
-  products.value = filteredProducts;
-}
+  return filteredProducts;
+});
+
 </script>
+
 
 <template>
   <div>
@@ -56,11 +59,15 @@ function applyFiltersAndSorting() {
         <option value="All categories">All categories</option>
         <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
       </select>
+
+      <button @click="resetFiltersAndSorting" class="reset-button p-2 border border-gray-300 rounded">
+        Reset Filters
+      </button>
     </div>
 
-    <div v-if="products.length" class="product-grid">
+    <div v-if="filteredAndSortedProducts.length" class="product-grid">
       <router-link
-        v-for="product in products"
+        v-for="product in filteredAndSortedProducts"
         :key="product.id"
         :to="`/product/${product.id}`"
         class="product-card"
@@ -78,6 +85,7 @@ function applyFiltersAndSorting() {
     </div>
   </div>
 </template>
+
 <style scoped>
 .product-grid {
   display: grid;
@@ -120,12 +128,12 @@ function applyFiltersAndSorting() {
 .product-card h2 {
   font-size: 18px;
   margin-bottom: 8px;
-  text-decoration: none; /* Remove underlining */
+  text-decoration: none;
 }
 
 .product-card p {
   margin-bottom: 8px;
-  text-decoration: none; /* Remove underlining */
+  text-decoration: none;
 }
 
 .rating {
