@@ -1,20 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchProducts } from '../api';
+import { fetchCategories } from '../api';
 
-const products = ref([]);
-const loading = ref(true);
-const error = ref(null);
+const categories = ref([]);
 
 onMounted(async () => {
-  try {
-    products.value = await fetchProducts();
-  } catch (err) {
-    error.value = 'Failed to fetch products.';
-  } finally {
-    loading.value = false;
-  }
+  categories.value = await fetchCategories();
 });
+
+const filterByCategory = (category) => {
+};
+
 </script>
 
 <template>
@@ -22,7 +18,6 @@ onMounted(async () => {
     <div class="logo">My App Logo</div>
     <nav>
       <ul>
-        <li>categories</li>
         <li class="search-item">
           <div class="search-container">
             <input type="text" placeholder="Search for products & categories" />

@@ -5,22 +5,59 @@ import { fetchProducts } from '../api';
 const products = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const sorting = ref('default');
+const filterItem = ref('All categories');
+const categories = ref([]);
 
 onMounted(async () => {
   try {
     products.value = await fetchProducts();
+    // Assuming you have a method to extract categories from products
+    categories.value = [...new Set(products.value.map(p => p.category))];
   } catch (err) {
     error.value = 'Failed to fetch products.';
   } finally {
     loading.value = false;
   }
 });
+
+function applyFiltersAndSorting() {
+  let filteredProducts = [...products.value];
+
+  // Filter by category
+  if (filterItem.value !== 'All categories') {
+    filteredProducts = filteredProducts.filter(product => product.category === filterItem.value);
+  }
+
+  // Sort products
+  if (sorting.value === 'low') {
+    filteredProducts.sort((a, b) => a.price - b.price);
+  } else if (sorting.value === 'high') {
+    filteredProducts.sort((a, b) => b.price - a.price);
+  }
+
+  products.value = filteredProducts;
+}
 </script>
 
 <template>
   <div>
     <div v-if="loading">Loading...</div>
     <div v-if="error">{{ error }}</div>
+
+    <div class="filters">
+      <select v-model="sorting" @change="applyFiltersAndSorting" class="p-2 border border-gray-300 rounded">
+        <option value="default">Default</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+      </select>
+
+      <select v-model="filterItem" @change="applyFiltersAndSorting" class="p-2 border border-gray-300 rounded">
+        <option value="All categories">All categories</option>
+        <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
+      </select>
+    </div>
+
     <div v-if="products.length" class="product-grid">
       <router-link
         v-for="product in products"
@@ -41,7 +78,6 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
 <style scoped>
 .product-grid {
   display: grid;

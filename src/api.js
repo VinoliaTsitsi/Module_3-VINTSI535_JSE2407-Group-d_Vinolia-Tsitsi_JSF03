@@ -29,12 +29,16 @@ export async function fetchProductDetails(productId) {
   }
 
 /**
- * Fetches categories from the fake store API.
- * @returns {Promise<string[]>} List of categories.
+ * Fetches categories from the API.
+ * @returns {Promise<Array>} An array of categories.
  */
 export async function fetchCategories() {
   const response = await fetch('https://fakestoreapi.com/products/categories');
-  return await response.json();
+  if (!response.ok) {
+    throw new Error('Failed to fetch categories');
+  }
+  return response.json();
 }
+
 
   

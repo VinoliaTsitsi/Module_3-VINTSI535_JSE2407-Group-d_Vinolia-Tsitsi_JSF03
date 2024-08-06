@@ -37,10 +37,11 @@ onMounted(async () => {
   display: flex;
   align-items: flex-start;
   gap: 20px;
+  background-color: #a373b155; 
 }
 
 .product-image {
-  flex: 0 0 30%; /* Adjusted width for the image */
+  flex: 0 0 30%;
   max-width: 100%;
   height: auto;
   border-radius: 8px;
