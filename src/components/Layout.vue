@@ -8,6 +8,7 @@ const loading = ref(true);
 const error = ref(null);
 const sorting = ref('default');
 const filterItem = ref('All categories');
+const searchTerm = ref('');
 const categories = ref([]);
 
 onMounted(async () => {
@@ -23,14 +24,22 @@ onMounted(async () => {
   }
 });
 
-
 const filteredAndSortedProducts = computed(() => {
   let filteredProducts = [...originalProducts.value];
 
+  // Filter by category
   if (filterItem.value !== 'All categories') {
     filteredProducts = filteredProducts.filter(product => product.category === filterItem.value);
   }
 
+  // Filter by search term
+  if (searchTerm.value) {
+    filteredProducts = filteredProducts.filter(product =>
+      product.title.toLowerCase().includes(searchTerm.value.toLowerCase())
+    );
+  }
+
+  // Sort products
   if (sorting.value === 'low') {
     filteredProducts.sort((a, b) => a.price - b.price);
   } else if (sorting.value === 'high') {
@@ -39,9 +48,7 @@ const filteredAndSortedProducts = computed(() => {
 
   return filteredProducts;
 });
-
 </script>
-
 
 <template>
   <div>
@@ -49,20 +56,23 @@ const filteredAndSortedProducts = computed(() => {
     <div v-if="error">{{ error }}</div>
 
     <div class="filters">
-      <select v-model="sorting" @change="applyFiltersAndSorting" class="p-2 border border-gray-300 rounded">
+      <input 
+        v-model="searchTerm" 
+        type="text" 
+        placeholder="Search..." 
+        class="p-2 border border-gray-300 rounded"
+      />
+
+      <select v-model="sorting" class="p-2 border border-gray-300 rounded">
         <option value="default">Default</option>
         <option value="low">Price: Low to High</option>
         <option value="high">Price: High to Low</option>
       </select>
 
-      <select v-model="filterItem" @change="applyFiltersAndSorting" class="p-2 border border-gray-300 rounded">
+      <select v-model="filterItem" class="p-2 border border-gray-300 rounded">
         <option value="All categories">All categories</option>
         <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
       </select>
-
-      <button @click="resetFiltersAndSorting" class="reset-button p-2 border border-gray-300 rounded">
-        Reset Filters
-      </button>
     </div>
 
     <div v-if="filteredAndSortedProducts.length" class="product-grid">
@@ -87,6 +97,7 @@ const filteredAndSortedProducts = computed(() => {
 </template>
 
 <style scoped>
+/* Add your existing styles here */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

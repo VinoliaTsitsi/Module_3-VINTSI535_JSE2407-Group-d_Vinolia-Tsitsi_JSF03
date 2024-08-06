@@ -18,14 +18,6 @@ const filterByCategory = (category) => {
     <div class="logo">My App Logo</div>
     <nav>
       <ul>
-        <li class="search-item">
-          <div class="search-container">
-            <input type="text" placeholder="Search for products & categories" />
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path d="M10 2a8 8 0 015.3 13.7l4 4a1 1 0 01-1.4 1.4l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12A6 6 0 0010 4z" />
-            </svg>
-          </div>
-        </li>
         <li>Login</li>
         <li>cart</li>
       </ul>
