@@ -2,15 +2,30 @@
 import { ref, onMounted } from 'vue';
 import { fetchCategories } from '../api';
 
+/**
+ * Represents the list of categories fetched from the API.
+ * @type {import('vue').Ref<string[]>}
+ */
 const categories = ref([]);
 
+/**
+ * Fetches categories from the API and updates the `categories` ref.
+ * @async
+ * @function
+ * @returns {Promise<void>}
+ */
 onMounted(async () => {
   categories.value = await fetchCategories();
 });
 
+/**
+ * Filters products by the selected category.
+ * @function
+ * @param {string} category - The category to filter by.
+ */
 const filterByCategory = (category) => {
+  // Functionality to filter products by category will be implemented here.
 };
-
 </script>
 
 <template>
@@ -19,7 +34,7 @@ const filterByCategory = (category) => {
     <nav>
       <ul>
         <li>Login</li>
-        <li>cart</li>
+        <li>Cart</li>
       </ul>
     </nav>
   </header>
@@ -60,7 +75,7 @@ nav ul {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  position:static;
+  position: static;
 }
 
 .search-container input {

@@ -3,12 +3,43 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchProductDetails } from '../api';
 
+/**
+ * Represents the product details.
+ * @type {import('vue').Ref<Object|null>}
+ */
 const product = ref(null);
+
+/**
+ * Indicates whether the product details are currently being loaded.
+ * @type {import('vue').Ref<boolean>}
+ */
 const loading = ref(true);
+
+/**
+ * Represents any error that occurs during fetching product details.
+ * @type {import('vue').Ref<string|null>}
+ */
 const error = ref(null);
+
+/**
+ * Vue Router's route object used to access route parameters.
+ * @type {import('vue-router').RouteLocationNormalized}
+ */
 const route = useRoute();
+
+/**
+ * Vue Router's router object used for navigation.
+ * @type {import('vue-router').Router}
+ */
 const router = useRouter();
 
+/**
+ * Fetches the product details based on the product ID from the route parameters.
+ * Sets the `product`, `loading`, and `error` refs accordingly.
+ * @async
+ * @function
+ * @returns {Promise<void>}
+ */
 onMounted(async () => {
   try {
     const productId = route.params.id;
@@ -20,6 +51,10 @@ onMounted(async () => {
   }
 });
 
+/**
+ * Navigates back to the previous page in the browser history.
+ * @function
+ */
 const goBack = () => {
   router.back();
 };
